@@ -82,27 +82,4 @@ public:
         vector<int> disc(n,-1),low(n,-1),parent(n,-1);
         
         //check for every node
-        for(int i=0;i<n;i++)
-        {
-            if(disc[i]==-1)
-                dfs(i,adj,disc,low,res,parent);
-        }
-    }
-    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
-        vector<vector<int>> adj(n);
-        
-        //Create a new adjacent list
-        for(auto i:connections)
-        {
-            adj[i[0]].push_back(i[1]);
-            adj[i[1]].push_back(i[0]); 
-        }
-        
-        
-        vector<vector<int>> res;
-        
-        findBridge(adj,res,n);
-        return res;
-    }
-};
 ```
