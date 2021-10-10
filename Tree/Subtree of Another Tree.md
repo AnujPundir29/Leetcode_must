@@ -68,5 +68,34 @@ public:
             return helper(root,subRoot) or isSubtree(root->left,subRoot) or isSubtree(root->right,subRoot);
         return false;
     }
+    
+    // Another gfg soln
+    
+    vector<TreeNode*> nodes;
+public:
+    bool isSubtree(TreeNode* S, TreeNode* T) {
+        if (!S && !T) return true;
+        if (!S || !T) return false;
+        getDepth(S, getDepth(T, -1));
+        for (TreeNode* n: nodes)
+            if (identical(n, T))
+                return true;
+        return false;
+    }
+    int getDepth(TreeNode* r, int d) {
+        if (!r)
+            return -1;
+        int depth = max(getDepth(r->left, d), getDepth(r->right, d)) + 1;
+        // Check if depth equals required value
+        // Require depth is -1 for tree t (only return the depth, no push)
+        if (depth == d)
+            nodes.push_back(r);
+        return depth;
+    }
+    bool identical(TreeNode* a, TreeNode* b) {
+        if (!a && !b) return true;
+        if (!a || !b || a->val != b->val) return false;
+        return identical(a->left, b->left) && identical(a->right, b->right);
+    }
 };
 ```
