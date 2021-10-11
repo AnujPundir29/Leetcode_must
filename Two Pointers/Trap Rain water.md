@@ -1,10 +1,8 @@
 ### [42\. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)
 
-Difficulty: **Hard** 
+Difficulty: **Hard**  
 
-### [Video](https://www.youtube.com/watch?v=m18Hntz4go8)
-
-Related Topics: [Array](https://leetcode.com/tag/array/), [Two Pointers](https://leetcode.com/tag/two-pointers/), [Dynamic Programming](https://leetcode.com/tag/dynamic-programming/), [Stack](https://leetcode.com/tag/stack/)
+Related Topics: [Array](https://leetcode.com/tag/array/), [Two Pointers](https://leetcode.com/tag/two-pointers/), [Dynamic Programming](https://leetcode.com/tag/dynamic-programming/), [Stack](https://leetcode.com/tag/stack/), [Monotonic Stack](https://leetcode.com/tag/monotonic-stack/)
 
 
 Given `n` non-negative integers representing an elevation map where the width of each bar is `1`, compute how much water it can trap after raining.
@@ -29,7 +27,7 @@ Output: 9
 **Constraints:**
 
 *   `n == height.length`
-*   `0 <= n <= 3 * 10<sup>4</sup>`
+*   `1 <= n <= 2 * 10<sup>4</sup>`
 *   `0 <= height[i] <= 10<sup>5</sup>`
 
 
@@ -41,37 +39,22 @@ Language: **C++**
 class Solution {
 public:
     int trap(vector<int>& height) {
-        int l=0,r=height.size()-1,res=0,lmax=0,rmax=0;
-        
+        int l=0,r=height.size()-1,minHeight=0,sum=0;
         while(l<r)
         {
-            if(height[l]<=height[r])
-            {
-                if(height[l]<lmax)
+                while(l<r and height[l]<=minHeight)
                 {
-                    res+=lmax-height[l];
+                    sum+=minHeight-height[l++];
                 }
-                else
+                
+                while(l<r and height[r]<=minHeight)
                 {
-                    lmax=height[l];
+                    sum+=minHeight-height[r--];
                 }
-                l++;
-            }
-            else
-            {
-                if(height[r]<rmax)
-                {
-                    res+=rmax-height[r];
-                }
-                else
-                {
-                    rmax=height[r];
-                }
-                r--;
-            }
+            
+            minHeight=min(height[l],height[r]);
         }
-        
-        return res;
+        return sum;
     }
 };
 ```
